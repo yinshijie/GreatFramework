@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.enn.greatframework.authorize.dao.OpenDeveloperApplicationInfoDAO">
+	<resultMap id="BaseResultMap"
+		type="com.enn.greatframework.authorize.bean.OpenDeveloperApplicationInfo">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		<id column="APPLICATION_ID" property="applicationId" jdbcType="VARCHAR" />
+		<result column="DEVELOPER_ID" property="developerId" jdbcType="VARCHAR" />
+		<result column="APPLICATION_NAME" property="applicationName"
+			jdbcType="VARCHAR" />
+		<result column="APPLICATION_PUSH_URL" property="applicationPushUrl"
+			jdbcType="VARCHAR" />
+		<result column="APPLICATION_TOKEN" property="applicationToken"
+			jdbcType="VARCHAR" />
+		<result column="ENCODE_TYPE" property="encodeType" jdbcType="VARCHAR" />
+		<result column="ENCODE_AES_KEY" property="encodeAesKey"
+			jdbcType="VARCHAR" />
+		<result column="TIME_STAMP" property="timeStamp" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		APPLICATION_ID, DEVELOPER_ID, APPLICATION_NAME, APPLICATION_PUSH_URL,
+		APPLICATION_TOKEN,
+		ENCODE_TYPE, ENCODE_AES_KEY, TIME_STAMP
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		select
+		<include refid="Base_Column_List" />
+		from open_developer_application_info
+		where APPLICATION_ID = #{applicationId,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		delete from open_developer_application_info
+		where APPLICATION_ID = #{applicationId,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert"
+		parameterType="com.enn.greatframework.authorize.bean.OpenDeveloperApplicationInfo">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		insert into open_developer_application_info (APPLICATION_ID,
+		DEVELOPER_ID, APPLICATION_NAME,
+		APPLICATION_PUSH_URL, APPLICATION_TOKEN,
+		ENCODE_TYPE, ENCODE_AES_KEY, TIME_STAMP
+		)
+		values (#{applicationId,jdbcType=VARCHAR}, #{developerId,jdbcType=VARCHAR},
+		#{applicationName,jdbcType=VARCHAR},
+		#{applicationPushUrl,jdbcType=VARCHAR},
+		#{applicationToken,jdbcType=VARCHAR},
+		#{encodeType,jdbcType=VARCHAR}, #{encodeAesKey,jdbcType=VARCHAR}, #{timeStamp,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertSelective"
+		parameterType="com.enn.greatframework.authorize.bean.OpenDeveloperApplicationInfo">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		insert into open_developer_application_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="applicationId != null">
+				APPLICATION_ID,
+			</if>
+			<if test="developerId != null">
+				DEVELOPER_ID,
+			</if>
+			<if test="applicationName != null">
+				APPLICATION_NAME,
+			</if>
+			<if test="applicationPushUrl != null">
+				APPLICATION_PUSH_URL,
+			</if>
+			<if test="applicationToken != null">
+				APPLICATION_TOKEN,
+			</if>
+			<if test="encodeType != null">
+				ENCODE_TYPE,
+			</if>
+			<if test="encodeAesKey != null">
+				ENCODE_AES_KEY,
+			</if>
+			<if test="timeStamp != null">
+				TIME_STAMP,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="applicationId != null">
+				#{applicationId,jdbcType=VARCHAR},
+			</if>
+			<if test="developerId != null">
+				#{developerId,jdbcType=VARCHAR},
+			</if>
+			<if test="applicationName != null">
+				#{applicationName,jdbcType=VARCHAR},
+			</if>
+			<if test="applicationPushUrl != null">
+				#{applicationPushUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="applicationToken != null">
+				#{applicationToken,jdbcType=VARCHAR},
+			</if>
+			<if test="encodeType != null">
+				#{encodeType,jdbcType=VARCHAR},
+			</if>
+			<if test="encodeAesKey != null">
+				#{encodeAesKey,jdbcType=VARCHAR},
+			</if>
+			<if test="timeStamp != null">
+				#{timeStamp,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.enn.greatframework.authorize.bean.OpenDeveloperApplicationInfo">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		update open_developer_application_info
+		<set>
+			<if test="developerId != null">
+				DEVELOPER_ID = #{developerId,jdbcType=VARCHAR},
+			</if>
+			<if test="applicationName != null">
+				APPLICATION_NAME = #{applicationName,jdbcType=VARCHAR},
+			</if>
+			<if test="applicationPushUrl != null">
+				APPLICATION_PUSH_URL = #{applicationPushUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="applicationToken != null">
+				APPLICATION_TOKEN = #{applicationToken,jdbcType=VARCHAR},
+			</if>
+			<if test="encodeType != null">
+				ENCODE_TYPE = #{encodeType,jdbcType=VARCHAR},
+			</if>
+			<if test="encodeAesKey != null">
+				ENCODE_AES_KEY = #{encodeAesKey,jdbcType=VARCHAR},
+			</if>
+			<if test="timeStamp != null">
+				TIME_STAMP = #{timeStamp,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where APPLICATION_ID = #{applicationId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey"
+		parameterType="com.enn.greatframework.authorize.bean.OpenDeveloperApplicationInfo">
+		<!-- @Enn.Howmuch.MybatisGenerator -->
+		update open_developer_application_info
+		set DEVELOPER_ID = #{developerId,jdbcType=VARCHAR},
+		APPLICATION_NAME = #{applicationName,jdbcType=VARCHAR},
+		APPLICATION_PUSH_URL = #{applicationPushUrl,jdbcType=VARCHAR},
+		APPLICATION_TOKEN = #{applicationToken,jdbcType=VARCHAR},
+		ENCODE_TYPE = #{encodeType,jdbcType=VARCHAR},
+		ENCODE_AES_KEY = #{encodeAesKey,jdbcType=VARCHAR},
+		TIME_STAMP = #{timeStamp,jdbcType=VARCHAR}
+		where APPLICATION_ID = #{applicationId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据应用token获取应用信息 -->
+	<select id="selectByApplicationToken" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from open_developer_application_info
+		where APPLICATION_TOKEN = #{appToken,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

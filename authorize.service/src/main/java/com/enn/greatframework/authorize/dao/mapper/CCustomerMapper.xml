@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enn.greatframework.authorize.dao.CCustomerDAO" >
+    <resultMap id="BaseResultMap" type="com.enn.greatframework.authorize.bean.CCustomer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        <id column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_TITLE" property="customerTitle" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ICON_PATH" property="customerIconPath" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_PASSWORD" property="customerPassword" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_MOBILE" property="customerMobile" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_EMAIL" property="customerEmail" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_CREATETIME" property="customerCreatetime" jdbcType="TIMESTAMP" />
+        <result column="CUSTOMER_PARENT_ID" property="customerParentId" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_SEC_MOBILE" property="customerSecMobile" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_SEC_EMAIL" property="customerSecEmail" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_STATE" property="customerState" jdbcType="INTEGER" />
+        <result column="CUSTOMER_SEC_QA_ENABLE" property="customerSecQaEnable" jdbcType="BIT" />
+        <result column="CUSTOMER_SEC_CONTROL_ENABLE" property="customerSecControlEnable" jdbcType="BIT" />
+        <result column="CUSTOMER_SEC_CA_ENABLE" property="customerSecCaEnable" jdbcType="BIT" />
+        <result column="CUSTOMER_ENABLE" property="customerEnable" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_TITLE, CUSTOMER_ICON_PATH, CUSTOMER_PASSWORD, 
+        CUSTOMER_MOBILE, CUSTOMER_EMAIL, CUSTOMER_CREATETIME, CUSTOMER_PARENT_ID, CUSTOMER_SEC_MOBILE, 
+        CUSTOMER_SEC_EMAIL, CUSTOMER_STATE, CUSTOMER_SEC_QA_ENABLE, CUSTOMER_SEC_CONTROL_ENABLE, 
+        CUSTOMER_SEC_CA_ENABLE, CUSTOMER_ENABLE, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select 
+        <include refid="Base_Column_List" />
+        from c_customer
+        where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        delete from c_customer
+        where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.enn.greatframework.authorize.bean.CCustomer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        insert into c_customer (CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_TITLE, 
+            CUSTOMER_ICON_PATH, CUSTOMER_PASSWORD, CUSTOMER_MOBILE, 
+            CUSTOMER_EMAIL, CUSTOMER_CREATETIME, 
+            CUSTOMER_PARENT_ID, CUSTOMER_SEC_MOBILE, 
+            CUSTOMER_SEC_EMAIL, CUSTOMER_STATE, CUSTOMER_SEC_QA_ENABLE, 
+            CUSTOMER_SEC_CONTROL_ENABLE, CUSTOMER_SEC_CA_ENABLE, 
+            CUSTOMER_ENABLE, update_time)
+        values (#{customerId,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerTitle,jdbcType=VARCHAR}, 
+            #{customerIconPath,jdbcType=VARCHAR}, #{customerPassword,jdbcType=VARCHAR}, #{customerMobile,jdbcType=VARCHAR}, 
+            #{customerEmail,jdbcType=VARCHAR}, #{customerCreatetime,jdbcType=TIMESTAMP}, 
+            #{customerParentId,jdbcType=VARCHAR}, #{customerSecMobile,jdbcType=VARCHAR}, 
+            #{customerSecEmail,jdbcType=VARCHAR}, #{customerState,jdbcType=INTEGER}, #{customerSecQaEnable,jdbcType=BIT}, 
+            #{customerSecControlEnable,jdbcType=BIT}, #{customerSecCaEnable,jdbcType=BIT}, 
+            #{customerEnable,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.enn.greatframework.authorize.bean.CCustomer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        insert into c_customer
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="customerId != null" >
+                CUSTOMER_ID,
+            </if>
+            <if test="customerName != null" >
+                CUSTOMER_NAME,
+            </if>
+            <if test="customerTitle != null" >
+                CUSTOMER_TITLE,
+            </if>
+            <if test="customerIconPath != null" >
+                CUSTOMER_ICON_PATH,
+            </if>
+            <if test="customerPassword != null" >
+                CUSTOMER_PASSWORD,
+            </if>
+            <if test="customerMobile != null" >
+                CUSTOMER_MOBILE,
+            </if>
+            <if test="customerEmail != null" >
+                CUSTOMER_EMAIL,
+            </if>
+            <if test="customerCreatetime != null" >
+                CUSTOMER_CREATETIME,
+            </if>
+            <if test="customerParentId != null" >
+                CUSTOMER_PARENT_ID,
+            </if>
+            <if test="customerSecMobile != null" >
+                CUSTOMER_SEC_MOBILE,
+            </if>
+            <if test="customerSecEmail != null" >
+                CUSTOMER_SEC_EMAIL,
+            </if>
+            <if test="customerState != null" >
+                CUSTOMER_STATE,
+            </if>
+            <if test="customerSecQaEnable != null" >
+                CUSTOMER_SEC_QA_ENABLE,
+            </if>
+            <if test="customerSecControlEnable != null" >
+                CUSTOMER_SEC_CONTROL_ENABLE,
+            </if>
+            <if test="customerSecCaEnable != null" >
+                CUSTOMER_SEC_CA_ENABLE,
+            </if>
+            <if test="customerEnable != null" >
+                CUSTOMER_ENABLE,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="customerId != null" >
+                #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null" >
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerTitle != null" >
+                #{customerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="customerIconPath != null" >
+                #{customerIconPath,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPassword != null" >
+                #{customerPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="customerMobile != null" >
+                #{customerMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="customerEmail != null" >
+                #{customerEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCreatetime != null" >
+                #{customerCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="customerParentId != null" >
+                #{customerParentId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSecMobile != null" >
+                #{customerSecMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSecEmail != null" >
+                #{customerSecEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="customerState != null" >
+                #{customerState,jdbcType=INTEGER},
+            </if>
+            <if test="customerSecQaEnable != null" >
+                #{customerSecQaEnable,jdbcType=BIT},
+            </if>
+            <if test="customerSecControlEnable != null" >
+                #{customerSecControlEnable,jdbcType=BIT},
+            </if>
+            <if test="customerSecCaEnable != null" >
+                #{customerSecCaEnable,jdbcType=BIT},
+            </if>
+            <if test="customerEnable != null" >
+                #{customerEnable,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.enn.greatframework.authorize.bean.CCustomer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        update c_customer
+        <set >
+            <if test="customerName != null" >
+                CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerTitle != null" >
+                CUSTOMER_TITLE = #{customerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="customerIconPath != null" >
+                CUSTOMER_ICON_PATH = #{customerIconPath,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPassword != null" >
+                CUSTOMER_PASSWORD = #{customerPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="customerMobile != null" >
+                CUSTOMER_MOBILE = #{customerMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="customerEmail != null" >
+                CUSTOMER_EMAIL = #{customerEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="customerCreatetime != null" >
+                CUSTOMER_CREATETIME = #{customerCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="customerParentId != null" >
+                CUSTOMER_PARENT_ID = #{customerParentId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSecMobile != null" >
+                CUSTOMER_SEC_MOBILE = #{customerSecMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSecEmail != null" >
+                CUSTOMER_SEC_EMAIL = #{customerSecEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="customerState != null" >
+                CUSTOMER_STATE = #{customerState,jdbcType=INTEGER},
+            </if>
+            <if test="customerSecQaEnable != null" >
+                CUSTOMER_SEC_QA_ENABLE = #{customerSecQaEnable,jdbcType=BIT},
+            </if>
+            <if test="customerSecControlEnable != null" >
+                CUSTOMER_SEC_CONTROL_ENABLE = #{customerSecControlEnable,jdbcType=BIT},
+            </if>
+            <if test="customerSecCaEnable != null" >
+                CUSTOMER_SEC_CA_ENABLE = #{customerSecCaEnable,jdbcType=BIT},
+            </if>
+            <if test="customerEnable != null" >
+                CUSTOMER_ENABLE = #{customerEnable,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.enn.greatframework.authorize.bean.CCustomer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        update c_customer
+        set CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+            CUSTOMER_TITLE = #{customerTitle,jdbcType=VARCHAR},
+            CUSTOMER_ICON_PATH = #{customerIconPath,jdbcType=VARCHAR},
+            CUSTOMER_PASSWORD = #{customerPassword,jdbcType=VARCHAR},
+            CUSTOMER_MOBILE = #{customerMobile,jdbcType=VARCHAR},
+            CUSTOMER_EMAIL = #{customerEmail,jdbcType=VARCHAR},
+            CUSTOMER_CREATETIME = #{customerCreatetime,jdbcType=TIMESTAMP},
+            CUSTOMER_PARENT_ID = #{customerParentId,jdbcType=VARCHAR},
+            CUSTOMER_SEC_MOBILE = #{customerSecMobile,jdbcType=VARCHAR},
+            CUSTOMER_SEC_EMAIL = #{customerSecEmail,jdbcType=VARCHAR},
+            CUSTOMER_STATE = #{customerState,jdbcType=INTEGER},
+            CUSTOMER_SEC_QA_ENABLE = #{customerSecQaEnable,jdbcType=BIT},
+            CUSTOMER_SEC_CONTROL_ENABLE = #{customerSecControlEnable,jdbcType=BIT},
+            CUSTOMER_SEC_CA_ENABLE = #{customerSecCaEnable,jdbcType=BIT},
+            CUSTOMER_ENABLE = #{customerEnable,jdbcType=INTEGER},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+    </update>
+
+	<!-- 登录查询，根据登录ID查询用户信息 -->
+    <select id="selectForLogin" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select 
+        <include refid="Base_Column_List" />
+        from c_customer
+        WHERE (
+			`CUSTOMER_NAME` = #{loginName,jdbcType=VARCHAR}
+			OR `CUSTOMER_MOBILE` = #{loginName,jdbcType=VARCHAR}
+			OR `CUSTOMER_EMAIL` = #{loginName,jdbcType=VARCHAR}
+		)
+		AND CUSTOMER_STATE = '1'
+    </select>
+
+	<!-- 根据主账号ID获取所有子帐号信息 -->
+    <select id="getChildCustomers" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select 
+        <include refid="Base_Column_List" />
+        FROM c_customer
+        WHERE CUSTOMER_PARENT_ID = #{customerId,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
