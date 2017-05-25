@@ -2,3 +2,4 @@
 /gateway.server/.gitignore
 /authorize.service/logs
 /common/log
+/gateway.server/logs
