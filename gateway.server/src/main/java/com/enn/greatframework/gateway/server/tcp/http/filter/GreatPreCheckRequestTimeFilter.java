@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 
@@ -33,7 +32,7 @@ import com.enn.greatframework.common.lang.StringUtil;
 import com.enn.greatframework.common.security.symmetric.AES.AESAlgorithmMode;
 import com.enn.greatframework.common.security.symmetric.AES.AESCrypt;
 import com.enn.greatframework.common.security.symmetric.AES.AESCryptFactory;
-import com.enn.greatframework.gateway.server.service.client.OpenDeveloperClient;
+import com.enn.greatframework.gateway.server.client.OpenDeveloperClient;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.http.HttpServletRequestWrapper;
@@ -52,7 +51,7 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 	private static final Logger LOGGER = Logger.getLogger(GreatPreCheckRequestTimeFilter.class);
 
 	@Autowired
-	private OpenDeveloperClient developerClient;
+	private OpenDeveloperClient openDeveloperClient;
 
 	/**
 	 * 平台允许请求时间差异值
@@ -86,13 +85,12 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 			String nonce = requestWrapper.getParameter(GreatFrameworkConst.REQUEST_PARAM_NONCE);
 			String signature = requestWrapper.getParameter(GreatFrameworkConst.REQUEST_PARAM_SIGNATURE);
 			String data = StringUtil.EMPTY;
-			if (requestWrapper.getMethod().equals("GET")) { // GET请求正文内容
-				data = requestWrapper.getParameter("data");
-			} else if (requestWrapper.getMethod().equals("POST")) { // POST请求正文内容
-				data = new String(requestWrapper.getContentData(), GreatFrameworkConst.DEFAULT_CHARSET_NAME);
+			byte[] contentData = requestWrapper.getContentData();
+			if (contentData != null && contentData.length > 0) {
+				data = new String(contentData, GreatFrameworkConst.DEFAULT_CHARSET_NAME);
 			}
 
-			LOGGER.debug(String.format("%s - %s(%s) : appToken=%s, timestamp=%s, nonce=%s, signature=%s, data=%s", ip,
+			LOGGER.info(String.format("%s - %s(%s) : appToken=%s, timestamp=%s, nonce=%s, signature=%s, data=%s", ip,
 			        request.getMethod(), request.getServletPath(), appToken, timestamp, nonce, signature, data));
 
 			/**
@@ -101,24 +99,24 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 			if (!StringUtil.checkParams(appToken, timestamp, nonce, signature)) { // 检查必填参数
 				responseBody = ResponseContent.PARAMS_ERROR();
 				ctx.setSendZuulResponse(Boolean.FALSE);
-				ctx.setResponseStatusCode(HttpStatus.NOT_IMPLEMENTED.value()); // 参数错误
+				// ctx.setResponseStatusCode(HttpStatus.NOT_IMPLEMENTED.value()); // 参数错误
 				ctx.setResponseBody(responseBody.toString());
 				LOGGER.warn("请求基础参数错误!");
 			} else if (!checkRequestTime(timestamp)) { // 检查请求时间戳与服务器时间戳
 				responseBody = ResponseContent.EXPIRED_ERROR();
 				ctx.setSendZuulResponse(Boolean.FALSE);
-				ctx.setResponseStatusCode(HttpStatus.NOT_IMPLEMENTED.value()); // 请求时间戳错误
+				// ctx.setResponseStatusCode(HttpStatus.NOT_IMPLEMENTED.value()); // 请求时间戳错误
 				ctx.setResponseBody(responseBody.toString());
 				LOGGER.warn("请求基础参数错误!请求时间不在服务器允许范围内!");
 			} else {
 				// 获取应用信息
-				String applicationInfoJson = developerClient.getApplicationInfoByToken(appToken);
+				String applicationInfoJson = openDeveloperClient.getApplicationInfoByToken(appToken);
 				JSONObject applicationInfo = ResponseContent.fromJsonStr(applicationInfoJson)
 				        .getResultJson("applicationInfo");
 				if (!checkApplication(applicationInfo)) {
 					responseBody = ResponseContent.CHECK_TOKEN_ERROR();
 					ctx.setSendZuulResponse(Boolean.FALSE);
-					ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value()); // 请求时间戳错误
+					// ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value()); // 请求时间戳错误
 					ctx.setResponseBody(responseBody.toString());
 					LOGGER.warn("应用Token验证失败!");
 				} else { /** 消息体解密 */
@@ -140,7 +138,7 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 					if (!checkSignature(appToken, timestamp, nonce, signature, data)) {
 						responseBody = ResponseContent.VARIFY_ERROR();
 						ctx.setSendZuulResponse(Boolean.FALSE);
-						ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value()); // 签名验证错误
+						// ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value()); // 签名验证错误
 						ctx.setResponseBody(responseBody.toString());
 						LOGGER.warn("请求签名校验失败!");
 					}
@@ -150,7 +148,7 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 			LOGGER.error(e.getMessage(), e);
 			responseBody = ResponseContent.INNER_ERROR();
 			ctx.setSendZuulResponse(Boolean.FALSE);
-			ctx.setResponseStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()); // 平台内部错误
+			// ctx.setResponseStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()); // 平台内部错误
 			ctx.setResponseBody(responseBody.toString());
 			LOGGER.warn("平台内部错误!");
 		}
@@ -168,7 +166,14 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 	 */
 	@Override
 	public boolean shouldFilter() {
-		return Boolean.TRUE;
+		RequestContext ctx = RequestContext.getCurrentContext();
+		HttpServletRequest request = ctx.getRequest();
+
+		if (request.getMethod().equals("GET")) { // GET请求不进行签名校验
+			return Boolean.FALSE;
+		} else { // 其他请求需要进行签名校验
+			return Boolean.TRUE;
+		}
 	}
 
 	/*
@@ -253,13 +258,17 @@ public class GreatPreCheckRequestTimeFilter extends ZuulFilter {
 	 */
 	private boolean checkApplication(JSONObject applicationInfo) {
 		// 验证获取应用信息
-		if (!StringUtil.checkObjectParams(applicationInfo, applicationInfo.get("developerId"),
-		        applicationInfo.get("applicationId"))) {
+		if (!StringUtil.checkObjectParams(applicationInfo)) {
 			return Boolean.FALSE;
+		}
+		if (!StringUtil.checkParams(applicationInfo.getString("developerId"),
+		        applicationInfo.getString("applicationId"))) {
+			return Boolean.FALSE;
+
 		}
 
 		// 获取开发者信息
-		String developerInfoJson = developerClient.getDeveloperInfo(applicationInfo.get("developerId").toString());
+		String developerInfoJson = openDeveloperClient.getDeveloperInfo(applicationInfo.get("developerId").toString());
 		JSONObject developerInfo = ResponseContent.fromJsonStr(developerInfoJson).getResultJson("developerInfo");
 		if (!StringUtil.checkObjectParams(developerInfo, developerInfo.get("developerId"),
 		        developerInfo.get("developerStatus"))) {

@@ -284,14 +284,81 @@
     </select>
 
 	<!-- 根据主账号ID获取所有子帐号信息 -->
-    <select id="getChildCustomers" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    <select id="getChildCustomers" resultMap="BaseResultMap" >
         <!--
         @Enn.Howmuch.MybatisGenerator
         -->
         select 
         <include refid="Base_Column_List" />
         FROM c_customer
-        WHERE CUSTOMER_PARENT_ID = #{customerId,jdbcType=VARCHAR}
+        WHERE CUSTOMER_PARENT_ID = #{0}
+        ORDER BY `CUSTOMER_NAME`
+        limit #{1}, #{2}
+    </select>
+	<!-- 根据主账号ID获取所有子帐号总数 -->
+    <select id="getChildCustomersCount" resultType="java.lang.Integer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select count(1) cnt
+        FROM c_customer
+        WHERE CUSTOMER_PARENT_ID = #{0}
+    </select>
+
+	<!-- 根据登录帐号、手机号、昵称、邮件进行模糊查询 -->
+    <select id="searchCustomer" resultMap="BaseResultMap" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select 
+        <include refid="Base_Column_List" />
+        FROM c_customer
+        WHERE customer_parent_id IS NOT NULL
+        	and (
+			`CUSTOMER_NAME` like #{0}
+			OR `CUSTOMER_MOBILE` like #{0}
+			OR `CUSTOMER_EMAIL` like #{0}
+			OR `CUSTOMER_TITLE` like #{0}
+			)
+        ORDER BY `CUSTOMER_NAME`
+        limit #{1}, #{2}
+    </select>
+	<!-- 根据登录帐号、手机号、昵称、邮件进行模糊查询 -->
+    <select id="searchCustomerCount" resultType="java.lang.Integer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select count(1) cnt
+        FROM c_customer
+        WHERE customer_parent_id IS NOT NULL
+        	and (
+			`CUSTOMER_NAME` like #{0}
+			OR `CUSTOMER_MOBILE` like #{0}
+			OR `CUSTOMER_EMAIL` like #{0}
+			OR `CUSTOMER_TITLE` like #{0}
+			)
+    </select>
+
+	<!-- 查询所有主账号 -->
+    <select id="getAllCustomer" resultMap="BaseResultMap" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select 
+        <include refid="Base_Column_List" />
+        FROM c_customer
+		where customer_parent_id IS NOT NULL
+        ORDER BY `CUSTOMER_NAME`
+        limit #{0}, #{1}
+    </select>
+	<!-- 查询所有主账号总数 -->
+    <select id="getAllCustomerCount" resultType="java.lang.Integer" >
+        <!--
+        @Enn.Howmuch.MybatisGenerator
+        -->
+        select count(1) cnt
+        FROM c_customer
+		where customer_parent_id IS NOT NULL
     </select>
 
 </mapper>

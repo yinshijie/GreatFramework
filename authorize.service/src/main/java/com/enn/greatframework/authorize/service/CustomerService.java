@@ -13,11 +13,10 @@
  */
 package com.enn.greatframework.authorize.service;
 
-import java.util.List;
-
 import com.enn.greatframework.authorize.bean.CCustomer;
 import com.enn.greatframework.authorize.bean.vo.CustomerSession;
 import com.enn.greatframework.common.GreatFrameworkException;
+import com.enn.greatframework.common.data.GreatCurrentPage;
 
 /**
  * @ClassName CustomerService
@@ -58,7 +57,29 @@ public interface CustomerService {
 	 * @param customerId
 	 * @return
 	 */
-	List<CCustomer> getChildCustomers(String customerId);
+	GreatCurrentPage<CCustomer> getChildCustomers(String customerId, int pageNo, int pageSize);
+
+	/**
+	 * 查询所有主帐号信息
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.authorize.service.CustomerService.getChildCustomers(...)
+	 *
+	 * @param customerId
+	 * @return
+	 */
+	GreatCurrentPage<CCustomer> getAllCustomers(int pageNo, int pageSize);
+
+	/**
+	 * 用户查询
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.authorize.service.CustomerService.searchCustomer(...)
+	 *
+	 * @param searchWord
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public GreatCurrentPage<CCustomer> searchCustomer(String searchWord, int pageNo, int pageSize);
 
 	/**
 	 * 更新用户信息

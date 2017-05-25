@@ -86,6 +86,28 @@ public abstract class AbstractController {
 	}
 
 	/**
+	 * 将请求内容转换成RequestContent
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.common.http.controller.AbstractController.transformRequestBody(...)
+	 *
+	 * @param requestBodyStr
+	 * @return
+	 * @throws GreatFrameworkException
+	 */
+	protected RequestContent transformRequestBody(String requestBodyStr) throws GreatFrameworkException {
+		if (StringUtil.isNotBlank(requestBodyStr)) {
+			RequestContent requestBody = JSON.parseObject(requestBodyStr, RequestContent.class);
+			String msgId = requestBody.getMessageId();
+			if (StringUtil.isBlank(msgId)) {
+				requestBody.setMessageId(DigestorManager.GUID());
+			}
+			return requestBody;
+		} else {
+			return null;
+		}
+	}
+
+	/**
 	 * 获取http请求IP地址
 	 * @Description  TODO
 	 * @Call com.enn.greatframework.common.http.controller.AbstractController.getRequestIp(...)

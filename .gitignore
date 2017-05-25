@@ -1,1 +1,4 @@
 /gateway.server/target
+/gateway.server/.gitignore
+/authorize.service/logs
+/common/log

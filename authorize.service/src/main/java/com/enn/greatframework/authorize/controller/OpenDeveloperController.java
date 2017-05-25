@@ -13,23 +13,23 @@
  */
 package com.enn.greatframework.authorize.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enn.greatframework.authorize.bean.OpenDeveloperApplicationInfo;
 import com.enn.greatframework.authorize.bean.OpenDeveloperUserInfo;
 import com.enn.greatframework.authorize.service.OpenApplicationService;
 import com.enn.greatframework.authorize.service.OpenDeveloperService;
+import com.enn.greatframework.common.http.context.RequestContent;
 import com.enn.greatframework.common.http.context.ResponseContent;
 import com.enn.greatframework.common.http.controller.AbstractController;
+import com.enn.greatframework.common.lang.StringUtil;
 
 /**
  * 开放平台
@@ -58,15 +58,13 @@ public class OpenDeveloperController extends AbstractController {
 	 * @param developerId
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getDeveloperInfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void getDeveloperInfo(HttpServletRequest request, HttpServletResponse response,
-	        @RequestParam("developerId") String developerId) {
+	@RequestMapping(value = "/getDeveloperInfo/{developerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseContent getDeveloperInfo(@PathVariable("developerId") String developerId) {
 		ResponseContent responseContent = null;
 		try {
-			// 解析传入参数
-			getRequestBody(request);
 			// 检查传入参数
 			boolean checkResult = Boolean.TRUE;
+			checkResult = StringUtil.checkParams(developerId);
 			if (!checkResult) {
 				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
@@ -83,7 +81,8 @@ public class OpenDeveloperController extends AbstractController {
 			logError(e.getMessage(), e);
 			responseContent = ResponseContent.INNER_ERROR();
 		}
-		responseWriter(request, response, responseContent);
+
+		return responseContent;
 	}
 
 	/**
@@ -96,15 +95,13 @@ public class OpenDeveloperController extends AbstractController {
 	 * @param appToken
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getApplicationInfoByToken", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void getApplicationInfoByToken(HttpServletRequest request, HttpServletResponse response,
-	        @RequestParam("appToken") String appToken) {
+	@RequestMapping(value = "/getApplicationInfoByToken/{appToken}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseContent getApplicationInfoByToken(@PathVariable("appToken") String appToken) {
 		ResponseContent responseContent = null;
 		try {
-			// 解析传入参数
-			getRequestBody(request);
 			// 检查传入参数
 			boolean checkResult = Boolean.TRUE;
+			checkResult = StringUtil.checkParams(appToken);
 			if (!checkResult) {
 				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
@@ -122,6 +119,44 @@ public class OpenDeveloperController extends AbstractController {
 			logError(e.getMessage(), e);
 			responseContent = ResponseContent.INNER_ERROR();
 		}
-		responseWriter(request, response, responseContent);
+
+		return responseContent;
+	}
+
+	/**
+	 * 创建开放平台开发者用户
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.authorize.controller.OpenDeveloperController.createDeveloperUser(...)
+	 *
+	 * @param requestContent
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/createDeveloperUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseContent createDeveloperUser(@RequestBody RequestContent requestContent) {
+		ResponseContent responseContent = null;
+		try {
+			// 解析传入参数
+			OpenDeveloperUserInfo openDeveloper = requestContent.getParam("openDeveloper", OpenDeveloperUserInfo.class);
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
+			} else {
+				openDeveloper = openDeveloperService.createDeveloperUser(openDeveloper);
+				if (openDeveloper == null) {
+					responseContent = ResponseContent.INNER_ERROR();
+				} else {
+					// 装配结果集
+					responseContent = ResponseContent.SUCCESS();
+					responseContent.addResultObject("openDeveloper", openDeveloper);
+				}
+			}
+		} catch (Exception e) {
+			logError(e.getMessage(), e);
+			responseContent = ResponseContent.INNER_ERROR();
+		}
+
+		return responseContent;
 	}
 }

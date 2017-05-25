@@ -20613,3 +20613,259 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_79]
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_79]
 	at java.lang.Thread.run(Thread.java:745) [na:1.7.0_79]
+2017-05-24 09:22:09  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:22:11  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:22:14  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:22:15 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'developerClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:22:15  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:22:15 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field developerClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:25:05  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:25:06  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:25:10  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:25:10 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'developerClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:25:10  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:25:10 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field developerClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:26:37  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:26:38  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:26:41  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:26:41 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'openDeveloperClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:26:41  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:26:42 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field openDeveloperClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:28:50  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:28:51  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:28:55  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:28:55 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'openDeveloperClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:28:55  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:28:55 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field openDeveloperClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:29:40  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:29:42  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:29:45  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:29:45 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'openDeveloperClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:29:45  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:29:45 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field openDeveloperClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:37:54  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:37:55  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:37:58  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:37:59 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'openDeveloperClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:37:59  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:37:59 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field openDeveloperClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:51:57  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:51:59  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:52:02  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:52:02 ERROR org.springframework.boot.context.embedded.tomcat.TomcatStarter:63 - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'org.springframework.cloud.netflix.zuul.ZuulConfiguration$ZuulFilterConfiguration': Unsatisfied dependency expressed through field 'filters'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'greatPreCheckRequestTimeFilter': Unsatisfied dependency expressed through field 'openDeveloperClient'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2017-05-24 09:52:02  WARN org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext:550 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat
+2017-05-24 09:52:03 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field openDeveloperClient in com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter required a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.enn.howmuch.greatframework.authorize.api.OpenDeveloperClient' in your configuration.
+
+2017-05-24 09:55:41  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-24 09:55:43  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-24 09:55:46  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:55:53  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-24 09:55:54  INFO com.enn.greatframework.gateway.server.Application:57 - Started Application in 15.408 seconds (JVM running for 15.782)
+2017-05-26 05:51:56  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-26 05:51:58  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-26 05:52:02  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 05:52:09  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 05:52:10  INFO com.enn.greatframework.gateway.server.Application:57 - Started Application in 16.666 seconds (JVM running for 17.451)
+2017-05-26 05:53:43  INFO com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:93 - 10.23.76.210 - POST(/auth/customer/getCustomerInfo) : appToken=eWqc1A7O41MjliCANgiy2pMF, timestamp=1495749212852, nonce=WNfk6g, signature=d377a67de4d659a54fb74f664c6927d8c29e2418, data={"params":{"customerId":"072F5CF356FC4C3DA48391915D3FC93E"}}
+2017-05-26 05:53:43 DEBUG com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:220 - 请求时间戳:1495749212852 [2017-05-26 05:53:32], 当前时间戳:1495749223862 [2017-05-26 05:53:43]
+2017-05-26 05:59:42  WARN org.apache.activemq.broker.jmx.ManagementContext:158 - Failed to start JMX connector Cannot bind to URL [rmi://localhost:1099/jmxrmi]: javax.naming.CommunicationException [Root exception is java.rmi.NoSuchObjectException: no such object in table]. Will restart management to re-create JMX connector, trying to remedy this issue.
+2017-05-26 06:00:17  INFO com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:93 - 10.23.76.210 - POST(/auth/customer/getCustomerInfo) : appToken=eWqc1A7O41MjliCANgiy2pMF, timestamp=1495749212852, nonce=WNfk6g, signature=d377a67de4d659a54fb74f664c6927d8c29e2418, data={"params":{"customerId":"072F5CF356FC4C3DA48391915D3FC93E"}}
+2017-05-26 06:00:17 DEBUG com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:221 - 请求时间戳:1495749212852 [2017-05-26 05:53:32], 当前时间戳:1495749617225 [2017-05-26 06:00:17]
+2017-05-26 06:00:17  WARN com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:110 - 请求基础参数错误!请求时间不在服务器允许范围内!
+2017-05-26 06:01:43  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-26 06:01:45  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-26 06:01:48  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 06:01:55  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 06:01:56  INFO com.enn.greatframework.gateway.server.Application:57 - Started Application in 14.666 seconds (JVM running for 15.025)
+2017-05-26 06:02:31  INFO com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:93 - 10.23.76.210 - POST(/auth/customer/getCustomerInfo) : appToken=eWqc1A7O41MjliCANgiy2pMF, timestamp=1495749751054, nonce=8Mb1cM, signature=a94f094c8393171de2cd9aa51dcc671d8af95dfb, data={"params":{"customerId":"072F5CF356FC4C3DA48391915D3FC93E"}}
+2017-05-26 06:02:31 DEBUG com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:221 - 请求时间戳:1495749751054 [2017-05-26 06:02:31], 当前时间戳:1495749751329 [2017-05-26 06:02:31]
+2017-05-26 06:02:31 ERROR com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:148 - expect ':' at 0, actual =
+com.alibaba.fastjson.JSONException: expect ':' at 0, actual =
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:307) ~[fastjson-1.2.24.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parse(DefaultJSONParser.java:1327) ~[fastjson-1.2.24.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parse(DefaultJSONParser.java:1293) ~[fastjson-1.2.24.jar:na]
+	at com.alibaba.fastjson.JSON.parse(JSON.java:137) ~[fastjson-1.2.24.jar:na]
+	at com.alibaba.fastjson.JSON.parse(JSON.java:128) ~[fastjson-1.2.24.jar:na]
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:201) ~[fastjson-1.2.24.jar:na]
+	at com.enn.greatframework.common.http.context.ResponseContent.getResultJson(ResponseContent.java:310) ~[classes/:na]
+	at com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter.run(GreatPreCheckRequestTimeFilter.java:114) ~[classes/:na]
+	at com.netflix.zuul.ZuulFilter.runFilter(ZuulFilter.java:112) [zuul-core-1.3.0.jar:1.3.0]
+	at com.netflix.zuul.FilterProcessor.processZuulFilter(FilterProcessor.java:193) [zuul-core-1.3.0.jar:1.3.0]
+	at com.netflix.zuul.FilterProcessor.runFilters(FilterProcessor.java:157) [zuul-core-1.3.0.jar:1.3.0]
+	at com.netflix.zuul.FilterProcessor.preRoute(FilterProcessor.java:133) [zuul-core-1.3.0.jar:1.3.0]
+	at com.netflix.zuul.ZuulRunner.preRoute(ZuulRunner.java:105) [zuul-core-1.3.0.jar:1.3.0]
+	at com.netflix.zuul.http.ZuulServlet.preRoute(ZuulServlet.java:125) [zuul-core-1.3.0.jar:1.3.0]
+	at com.netflix.zuul.http.ZuulServlet.service(ZuulServlet.java:74) [zuul-core-1.3.0.jar:1.3.0]
+	at org.springframework.web.servlet.mvc.ServletWrappingController.handleRequestInternal(ServletWrappingController.java:157) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.cloud.netflix.zuul.web.ZuulController.handleRequest(ZuulController.java:44) [spring-cloud-netflix-core-1.2.4.RELEASE.jar:1.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:50) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:648) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846) [spring-webmvc-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:729) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:230) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52) [tomcat-embed-websocket-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.boot.web.filter.ApplicationContextHeaderFilter.doFilterInternal(ApplicationContextHeaderFilter.java:55) [spring-boot-1.4.3.RELEASE.jar:1.4.3.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.boot.actuate.trace.WebRequestTraceFilter.doFilterInternal(WebRequestTraceFilter.java:105) [spring-boot-actuator-1.4.3.RELEASE.jar:1.4.3.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:89) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.springframework.boot.actuate.autoconfigure.MetricsFilter.doFilterInternal(MetricsFilter.java:106) [spring-boot-actuator-1.4.3.RELEASE.jar:1.4.3.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-4.3.5.RELEASE.jar:4.3.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:108) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:349) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:784) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:802) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1410) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_79]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_79]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-8.5.6.jar:8.5.6]
+	at java.lang.Thread.run(Thread.java:745) [na:1.7.0_79]
+2017-05-26 06:02:32  WARN com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:153 - 平台内部错误!
+2017-05-26 06:04:12  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-26 06:04:14  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-26 06:04:17  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 06:04:23  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 06:04:24  INFO com.enn.greatframework.gateway.server.Application:57 - Started Application in 15.026 seconds (JVM running for 15.582)
+2017-05-26 06:05:18  INFO com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:93 - 10.23.76.210 - POST(/auth/customer/getCustomerInfo) : appToken=eWqc1A7O41MjliCANgiy2pMF, timestamp=1495749915401, nonce=udXSy4, signature=513e8e1187eb9908fcc62c00f93eb0eee54ca27d, data={"params":{"customerId":"072F5CF356FC4C3DA48391915D3FC93E"}}
+2017-05-26 06:05:18 DEBUG com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:221 - 请求时间戳:1495749915401 [2017-05-26 06:05:15], 当前时间戳:1495749918991 [2017-05-26 06:05:18]
+2017-05-26 06:10:23  INFO com.enn.greatframework.gateway.server.Application:665 - The following profiles are active: dev
+2017-05-26 06:10:24  WARN org.springframework.context.annotation.ConfigurationClassPostProcessor:373 - Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-05-26 06:10:28  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 06:10:34  WARN com.netflix.config.sources.URLConfigurationSource:121 - No URLs will be polled as dynamic configuration sources.
+2017-05-26 06:10:35  INFO com.enn.greatframework.gateway.server.Application:57 - Started Application in 14.938 seconds (JVM running for 15.437)
+2017-05-26 06:11:17  INFO com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:93 - 10.23.76.210 - POST(/auth/customer/getCustomerInfo) : appToken=eWqc1A7O41MjliCANgiy2pMF, timestamp=1495750272318, nonce=JtqJGi, signature=9fc0eaab2a647d1690c47fa30657ce3929593c7d, data={"params":{"customerId":"072F5CF356FC4C3DA48391915D3FC93E"}}
+2017-05-26 06:11:18 DEBUG com.enn.greatframework.gateway.server.tcp.http.filter.GreatPreCheckRequestTimeFilter:221 - 请求时间戳:1495750272318 [2017-05-26 06:11:12], 当前时间戳:1495750278037 [2017-05-26 06:11:18]
+2017-05-26 06:11:58 DEBUG com.enn.greatframework.common.http.sender.param.GreatSignatureParam:187 - 服务端签名参数值排序后:1495750272318JtqJGieWqc1A7O41MjliCANgiy2pMF{"params":{"customerId":"072F5CF356FC4C3DA48391915D3FC93E"}}
+2017-05-26 06:11:58 DEBUG com.enn.greatframework.common.http.sender.param.GreatSignatureParam:189 - 服务端计算签名=9fc0eaab2a647d1690c47fa30657ce3929593c7d

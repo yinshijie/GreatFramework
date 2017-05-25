@@ -161,7 +161,12 @@ public class RequestContent implements Serializable {
 		if (StringUtil.isBlank(paramKey)) {
 			throw new IllegalArgumentException("param paramKey can not be null");
 		}
-		return params.get(paramKey).toString();
+		Object vObj = params.get(paramKey);
+		if (StringUtil.checkObjectParams(vObj)) {
+			return vObj.toString();
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -180,7 +185,12 @@ public class RequestContent implements Serializable {
 		if (StringUtil.isBlank(paramKey)) {
 			throw new IllegalArgumentException("params paramKey can not be null");
 		}
-		return JSON.parseObject(params.get(paramKey).toString(), claz);
+		Object vObj = params.get(paramKey);
+		if (StringUtil.checkObjectParams(vObj)) {
+			return JSON.parseObject(vObj.toString(), claz);
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -193,7 +203,11 @@ public class RequestContent implements Serializable {
 	 * @return
 	 */
 	public static final RequestContent fromJsonStr(String string) {
-		return JSON.parseObject(string, RequestContent.class);
+		if (StringUtil.checkParams(string)) {
+			return JSON.parseObject(string, RequestContent.class);
+		} else {
+			return null;
+		}
 	}
 
 	/*

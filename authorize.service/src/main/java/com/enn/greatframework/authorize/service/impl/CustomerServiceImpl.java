@@ -37,6 +37,7 @@ import com.enn.greatframework.authorize.service.CustomerService;
 import com.enn.greatframework.authorize.service.OpenApplicationService;
 import com.enn.greatframework.common.GreatFrameworkConst;
 import com.enn.greatframework.common.GreatFrameworkException;
+import com.enn.greatframework.common.data.GreatCurrentPage;
 import com.enn.greatframework.common.lang.StringUtil;
 import com.enn.greatframework.common.security.digest.DigestorManager;
 
@@ -126,9 +127,66 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @see com.enn.greatframework.authorize.service.CustomerService#getChildCustomers(java.lang.String)
 	 */
 	@Override
-	public List<CCustomer> getChildCustomers(String customerId) {
-		List<CCustomer> childCustomers = cCustomerDAO.getChildCustomers(customerId);
-		return childCustomers;
+	public GreatCurrentPage<CCustomer> getChildCustomers(String customerId, int pageNo, int pageSize) {
+		GreatCurrentPage<CCustomer> pageInfo = new GreatCurrentPage<CCustomer>();
+		pageInfo.setPageNo(pageNo);
+		pageInfo.setPageSize(pageSize);
+
+		List<CCustomer> childCustomers = cCustomerDAO.getChildCustomers(customerId, pageInfo.getStartIndex(), pageSize);
+		int totalRecord = cCustomerDAO.getChildCustomersCount(customerId);
+		pageInfo.setContentList(childCustomers);
+		pageInfo.setTotalRecord(totalRecord);
+		return pageInfo;
+	}
+
+	/*
+	 * @Title: getAllCustomers
+	 *
+	 * @Description TODO
+	 *
+	 * @param pageNo
+	 *
+	 * @param pageSize
+	 *
+	 * @return
+	 *
+	 * @see com.enn.greatframework.authorize.service.CustomerService#getAllCustomers(int, int)
+	 */
+	@Override
+	public GreatCurrentPage<CCustomer> getAllCustomers(int pageNo, int pageSize) {
+		GreatCurrentPage<CCustomer> pageInfo = new GreatCurrentPage<CCustomer>();
+		pageInfo.setPageNo(pageNo);
+		pageInfo.setPageSize(pageSize);
+
+		List<CCustomer> childCustomers = cCustomerDAO.getAllCustomer(pageInfo.getStartIndex(), pageSize);
+		int totalRecord = cCustomerDAO.getAllCustomerCount();
+		pageInfo.setContentList(childCustomers);
+		pageInfo.setTotalRecord(totalRecord);
+		return pageInfo;
+	}
+
+	/**
+	 * 用户查询
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.authorize.service.impl.CustomerServiceImpl.searchCustomer(...)
+	 *
+	 * @param searchWord
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	@Override
+	public GreatCurrentPage<CCustomer> searchCustomer(String searchWord, int pageNo, int pageSize) {
+		GreatCurrentPage<CCustomer> pageInfo = new GreatCurrentPage<CCustomer>();
+		pageInfo.setPageNo(pageNo);
+		pageInfo.setPageSize(pageSize);
+
+		searchWord = "%" + searchWord + "%";
+		List<CCustomer> childCustomers = cCustomerDAO.searchCustomer(searchWord, pageInfo.getStartIndex(), pageSize);
+		int totalRecord = cCustomerDAO.searchCustomerCount(searchWord);
+		pageInfo.setContentList(childCustomers);
+		pageInfo.setTotalRecord(totalRecord);
+		return pageInfo;
 	}
 
 	/*
@@ -166,6 +224,25 @@ public class CustomerServiceImpl implements CustomerService {
 	public CCustomer updateCustomer(CCustomer customer) {
 		Date now = new Date();
 		customer.setUpdateTime(now);
+
+		if (StringUtil.isNotBlank(customer.getCustomerMobile())) {
+			customer.setCustomerSecMobile(customer.getCustomerMobile());
+		}
+		if (StringUtil.isNotBlank(customer.getCustomerEmail())) {
+			customer.setCustomerSecEmail(customer.getCustomerEmail());
+		}
+		if (StringUtil.isNotBlank(customer.getCustomerPassword())) {
+			// 用户密码加密
+			try {
+				String pwdResource = new String(Base64Utils.decodeFromString(customer.getCustomerPassword()),
+				        GreatFrameworkConst.DEFAULT_CHARSET_NAME);
+				String pwdEncode = DigestorManager.greatPasswordCreate(pwdResource);
+				customer.setCustomerPassword(pwdEncode);
+			} catch (UnsupportedEncodingException e) {
+				LOGGER.warn(e.getMessage(), e);
+			}
+		}
+
 		int updateCnt = cCustomerDAO.updateByPrimaryKeySelective(customer);
 		if (updateCnt > 0) {
 			customer = cCustomerDAO.selectByPrimaryKey(customer.getCustomerId());
@@ -392,6 +469,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @param sessionId
 	 */
 	private String getCustomerIdBySessionId(String sessionId) {
+		LOGGER.info(String.format("search redis cache, sessionId = %s", sessionId));
 		RedisConnection jedisConn = null;
 		try {
 			jedisConn = jedisConnectionFactory.getConnection();
@@ -428,6 +506,8 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @param sessionId
 	 */
 	private void setSessionCache(String appId, String customerId, String sessionId) {
+		LOGGER.info(String.format("set redis cache, appId = %s, customerId = %s, sessionId = %s", appId, customerId,
+		        sessionId));
 		RedisConnection jedisConn = null;
 		try {
 			jedisConn = jedisConnectionFactory.getConnection();
@@ -461,6 +541,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @param sessionId
 	 */
 	private void delSessionCache(String sessionId) {
+		LOGGER.info(String.format("delete redis cache, sessionId = %s", sessionId));
 		RedisConnection jedisConn = null;
 		try {
 			jedisConn = jedisConnectionFactory.getConnection();

@@ -365,5 +365,11 @@ public class DigestorManager {
 	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		System.out.println(greatPasswordCreate("ysj850620"));
 		System.out.println(greatPasswordValidate("ysj850620", "C391DA267256CADCF7DCC749E771E2DE19"));
+
+		for (int i = 0; i < 5; i++) {
+			System.out.println(GUID());
+		}
+
+		System.exit(0);
 	}
 }

@@ -13,21 +13,22 @@
  */
 package com.enn.greatframework.authorize.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enn.greatframework.authorize.bean.CCustomer;
 import com.enn.greatframework.authorize.bean.vo.CustomerSession;
 import com.enn.greatframework.authorize.service.CustomerService;
-import com.enn.greatframework.common.GreatFrameworkConst;
+import com.enn.greatframework.common.data.GreatCurrentPage;
 import com.enn.greatframework.common.http.context.RequestContent;
 import com.enn.greatframework.common.http.context.ResponseContent;
 import com.enn.greatframework.common.http.controller.AbstractController;
@@ -49,35 +50,76 @@ public class CustomerController extends AbstractController {
 	@Autowired
 	private CustomerService customerService;
 
+	// /**
+	// * 根据用户ID查询用户信息
+	// * @Description TODO
+	// * @Call com.enn.greatframework.authorize.controller.CustomerController.getCustomerInfo(...)
+	// *
+	// * @param requestContent
+	// * @return
+	// */
+	// @ResponseBody
+	// @RequestMapping(value = "/getCustomerInfo", method = RequestMethod.POST, produces =
+	// MediaType.APPLICATION_JSON_UTF8_VALUE)
+	// public String getCustomerInfo(HttpServletRequest request) {
+	// ResponseContent responseContent = null;
+	// try {
+	// // 检查传入参数
+	// boolean checkResult = Boolean.TRUE;
+	// RequestContent requestBody = getRequestBody(request);
+	// String customerId = requestBody.getParam("customerId");
+	// checkResult = StringUtil.checkParams(customerId);
+	//
+	// if (!checkResult) {
+	// responseContent = ResponseContent.PARAMS_ERROR();
+	// } else {
+	// CCustomer customerInfo = customerService.getCustomerById(customerId);
+	//
+	// responseContent = ResponseContent.SUCCESS();
+	// responseContent.addResultObject("customer", customerInfo);
+	// }
+	// } catch (Exception e) {
+	// LOGGER.error(e.getMessage(), e);
+	// responseContent = ResponseContent.INNER_ERROR();
+	// responseContent.setDescribe(e.getMessage());
+	// }
+	//
+	// return responseContent.toString();
+	// }
+
 	/**
 	 * 根据用户ID查询用户信息
 	 * @Description  TODO
 	 * @Call com.enn.greatframework.authorize.controller.CustomerController.getCustomerInfo(...)
 	 *
-	 * @param request
-	 * @param response
+	 * @param requestContent
+	 * @return
 	 */
-	@RequestMapping(value = "/getCustomerInfo", method = RequestMethod.POST)
-	public void getCustomerInfo(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/getCustomerInfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseContent getCustomerInfo(@RequestBody RequestContent requestContent) {
+		ResponseContent responseContent = null;
 		try {
-			RequestContent requestBody = getRequestBody(request);
-			String customerId = requestBody.getParam("customerId");
-			if (!StringUtil.checkParams(customerId)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
+			String customerId = requestContent.getParam("customerId");
+			checkResult = StringUtil.checkParams(customerId);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				CCustomer customerInfo = customerService.getCustomerById(customerId);
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("customer", customerInfo);
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("customer", customerInfo);
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent;
 	}
 
 	/**
@@ -88,30 +130,35 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/createCustomer", method = RequestMethod.POST)
-	public void createCustomer(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/createCustomer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String createCustomer(HttpServletRequest request) {
+		ResponseContent responseContent = null;
 		try {
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			CCustomer customerInfo = requestBody.getParam("customer", CCustomer.class);
-			if (!StringUtil.checkObjectParams(customerInfo)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			checkResult = StringUtil.checkObjectParams(customerInfo);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				customerInfo = customerService.createCustomer(customerInfo);
 				if (customerInfo != null) {
-					responseBody = ResponseContent.SUCCESS();
-					responseBody.addResultObject("customer", customerInfo);
+					responseContent = ResponseContent.SUCCESS();
+					responseContent.addResultObject("customer", customerInfo);
 				} else {
-					responseBody = ResponseContent.DATABASE_ERROR();
+					responseContent = ResponseContent.DATABASE_ERROR();
 				}
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 
 	/**
@@ -122,27 +169,128 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/getChildCustomers", method = RequestMethod.POST)
-	public void getChildCustomers(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/getChildCustomers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String getChildCustomers(HttpServletRequest request) {
+		ResponseContent responseContent = null;
 		try {
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			String customerId = requestBody.getParam("customerId");
-			if (!StringUtil.checkParams(customerId)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
-			} else {
-				List<CCustomer> customers = customerService.getChildCustomers(customerId);
+			String pageNoStr = requestBody.getParam("pageNo");
+			String pageSizeStr = requestBody.getParam("pageSize");
+			checkResult = StringUtil.checkParams(customerId);
+			int pageNo = 1;
+			int pageSize = 20;
+			if (StringUtil.checkParams(pageNoStr, pageSizeStr)) {
+				pageNo = Integer.parseInt(pageNoStr);
+				pageSize = Integer.parseInt(pageSizeStr);
+			}
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("customerList", customers);
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
+			} else {
+				GreatCurrentPage<CCustomer> page = customerService.getChildCustomers(customerId, pageNo, pageSize);
+
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("page", page);
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
+	}
+
+	/**
+	 * 根据父帐号ID查询所有子帐号信息
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.authorize.controller.CustomerController.createCustomer(...)
+	 *
+	 * @param request
+	 * @param response
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/searchCustomer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String searchCustomer(HttpServletRequest request) {
+		ResponseContent responseContent = null;
+		try {
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
+			RequestContent requestBody = getRequestBody(request);
+			String searchWord = requestBody.getParam("searchWord");
+			String pageNoStr = requestBody.getParam("pageNo");
+			String pageSizeStr = requestBody.getParam("pageSize");
+			int pageNo = 1;
+			int pageSize = 20;
+			if (StringUtil.isBlank(searchWord)) {
+				searchWord = StringUtil.EMPTY;
+			}
+			if (StringUtil.checkParams(pageNoStr, pageSizeStr)) {
+				pageNo = Integer.parseInt(pageNoStr);
+				pageSize = Integer.parseInt(pageSizeStr);
+			}
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
+			} else {
+				GreatCurrentPage<CCustomer> page = customerService.searchCustomer(searchWord, pageNo, pageSize);
+
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("page", page);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
+		}
+
+		return responseContent.toString();
+	}
+
+	/**
+	 * 根据父帐号ID查询所有子帐号信息
+	 * @Description  TODO
+	 * @Call com.enn.greatframework.authorize.controller.CustomerController.createCustomer(...)
+	 *
+	 * @param request
+	 * @param response
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllCustomers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String getAllCustomers(HttpServletRequest request) {
+		ResponseContent responseContent = null;
+		try {
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
+			RequestContent requestBody = getRequestBody(request);
+			String pageNoStr = requestBody.getParam("pageNo");
+			String pageSizeStr = requestBody.getParam("pageSize");
+			int pageNo = 1;
+			int pageSize = 20;
+			if (StringUtil.checkParams(pageNoStr, pageSizeStr)) {
+				pageNo = Integer.parseInt(pageNoStr);
+				pageSize = Integer.parseInt(pageSizeStr);
+			}
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
+			} else {
+				GreatCurrentPage<CCustomer> page = customerService.getAllCustomers(pageNo, pageSize);
+
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("page", page);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
+		}
+
+		return responseContent.toString();
 	}
 
 	/**
@@ -153,27 +301,32 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/updateCustomer", method = RequestMethod.POST)
-	public void updateCustomer(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/updateCustomer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String updateCustomer(HttpServletRequest request) {
+		ResponseContent responseContent = null;
 		try {
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			CCustomer customerInfo = requestBody.getParam("customer", CCustomer.class);
-			if (!StringUtil.checkObjectParams(customerInfo)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			checkResult = StringUtil.checkObjectParams(customerInfo);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				customerInfo = customerService.updateCustomer(customerInfo);
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("customer", customerInfo);
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("customer", customerInfo);
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 
 	/**
@@ -184,27 +337,32 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/getCustomerBySessionId", method = RequestMethod.POST)
-	public void getCustomerBySessionId(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/getCustomerBySessionId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String getCustomerBySessionId(HttpServletRequest request) {
+		ResponseContent responseContent = null;
 		try {
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			String sessionId = requestBody.getParam("sessionId");
-			if (!StringUtil.checkParams(sessionId)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			checkResult = StringUtil.checkParams(sessionId);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				CCustomer customerInfo = customerService.getCustomerBySessionId(sessionId);
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("customer", customerInfo);
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("customer", customerInfo);
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 
 	/**
@@ -215,17 +373,21 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	public String login(HttpServletRequest request, @PathParam("appToken") String appToken) {
+		ResponseContent responseContent = null;
 		try {
-			String appToken = request.getParameter(GreatFrameworkConst.REQUEST_PARAM_APPTOKEN);
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			String loginName = requestBody.getParam("loginName");
 			String loginPwd = requestBody.getParam("loginPwd");
 			String sessionId = requestBody.getParam("sessionId");
-			if (!StringUtil.checkParams(appToken, loginName, loginPwd)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			checkResult = StringUtil.checkParams(appToken, loginName, loginPwd);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				CustomerSession customerSession = null;
 				if (StringUtil.isNotBlank(sessionId)) {
@@ -234,17 +396,17 @@ public class CustomerController extends AbstractController {
 					customerSession = customerService.customerLogin(appToken, loginName, loginPwd);
 				}
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("sessionId", customerSession.getSessionId());
-				responseBody.addResultObject("customer", customerSession.getCustomer());
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("sessionId", customerSession.getSessionId());
+				responseContent.addResultObject("customer", customerSession.getCustomer());
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 
 	/**
@@ -255,17 +417,21 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/loginNoEncode", method = RequestMethod.POST)
-	public void loginNoEncode(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/loginNoEncode", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String loginNoEncode(HttpServletRequest request, @PathParam("appToken") String appToken) {
+		ResponseContent responseContent = null;
 		try {
-			String appToken = request.getParameter(GreatFrameworkConst.REQUEST_PARAM_APPTOKEN);
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			String loginName = requestBody.getParam("loginName");
 			String loginPwd = requestBody.getParam("loginPwd");
 			String sessionId = requestBody.getParam("sessionId");
-			if (!StringUtil.checkParams(appToken, loginName, loginPwd)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			checkResult = StringUtil.checkParams(appToken, loginName, loginPwd);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				CustomerSession customerSession = null;
 				if (StringUtil.isNotBlank(sessionId)) {
@@ -274,17 +440,17 @@ public class CustomerController extends AbstractController {
 					customerSession = customerService.customerLogin_NoEncode(appToken, loginName, loginPwd);
 				}
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("sessionId", customerSession.getSessionId());
-				responseBody.addResultObject("customer", customerSession.getCustomer());
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("sessionId", customerSession.getSessionId());
+				responseContent.addResultObject("customer", customerSession.getCustomer());
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 
 	/**
@@ -295,29 +461,33 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/validate", method = RequestMethod.POST)
-	public void validate(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/validate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String validate(HttpServletRequest request, @PathParam("appToken") String appToken) {
+		ResponseContent responseContent = null;
 		try {
-			String appToken = request.getParameter(GreatFrameworkConst.REQUEST_PARAM_APPTOKEN);
+			// 检查传入参数
+			boolean checkResult = Boolean.TRUE;
 			RequestContent requestBody = getRequestBody(request);
 			String loginName = requestBody.getParam("loginName");
 			String loginPwd = requestBody.getParam("loginPwd");
-			if (!StringUtil.checkParams(appToken, loginName, loginPwd)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+			checkResult = StringUtil.checkParams(appToken, loginName, loginPwd);
+
+			if (!checkResult) {
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				CCustomer customerInfo = customerService.customerValidate(appToken, loginName, loginPwd);
 
-				responseBody = ResponseContent.SUCCESS();
-				responseBody.addResultObject("customer", customerInfo);
+				responseContent = ResponseContent.SUCCESS();
+				responseContent.addResultObject("customer", customerInfo);
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 
 	/**
@@ -328,25 +498,26 @@ public class CustomerController extends AbstractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public void logout(HttpServletRequest request, HttpServletResponse response) {
-		ResponseContent responseBody = null;
+	@ResponseBody
+	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String logout(HttpServletRequest request) {
+		ResponseContent responseContent = null;
 		try {
 			RequestContent requestBody = getRequestBody(request);
 			String sessionId = requestBody.getParam("sessionId");
 			if (!StringUtil.checkParams(sessionId)) {
-				responseBody = ResponseContent.PARAMS_ERROR();
+				responseContent = ResponseContent.PARAMS_ERROR();
 			} else {
 				customerService.customerLogout(sessionId);
 
-				responseBody = ResponseContent.SUCCESS();
+				responseContent = ResponseContent.SUCCESS();
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			responseBody = ResponseContent.INNER_ERROR();
-			responseBody.setDescribe(e.getMessage());
+			responseContent = ResponseContent.INNER_ERROR();
+			responseContent.setDescribe(e.getMessage());
 		}
 
-		responseWriter(request, response, responseBody);
+		return responseContent.toString();
 	}
 }

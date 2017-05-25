@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
 import com.enn.greatframework.common.GreatFrameworkConst;
 import com.enn.greatframework.common.date.DateTimeFormator;
@@ -39,7 +38,7 @@ import com.netflix.zuul.context.RequestContext;
  * @date 2017年5月5日 下午2:59:43
  *
  */
-@Service("greatFlowControlFilter")
+// @Service("greatFlowControlFilter")
 public class GreatFlowControlFilter extends ZuulFilter {
 
 	private static final Logger LOGGER = Logger.getLogger(GreatFlowControlFilter.class);
